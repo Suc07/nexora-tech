@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA TECH - Tienda Online</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            document.addEventListener("DOMContentLoaded", () => document.body.classList.add('dark-mode'));
+        }
+    </script>
+    <style>
+        /* ESTILOS ESPECÍFICOS DEL FLUJO DE TIENDA */
+        .checkout-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .step-item.active {
+            color: var(--accent-color);
+        }
+
+        .step-item.completed {
+            color: var(--accent-cyan);
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .step-item.active .step-number {
+            background: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .step-item.completed .step-number {
+            background: var(--accent-cyan);
+            color: #ffffff;
+        }
+
+        .checkout-step-content {
+            display: none;
+        }
+
+        .checkout-step-content.active {
+            display: block;
+        }
+
+        .tabla-tienda {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+        }
+
+        .tabla-tienda th, .tabla-tienda td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tabla-tienda th {
+            background-color: var(--border-color);
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .tabla-tienda td {
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .img-producto-tabla {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-body);
+        }
+
+        .badge-tipo {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--accent-color);
+        }
+
+        .btn-accion {
+            background: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-accion:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secundario {
+            background: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secundario:hover {
+            background: var(--text-muted);
+            color: #ffffff;
+        }
+
+        .metodo-pago-card {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+        }
+
+        .metodo-pago-card.selected {
+            border-color: var(--accent-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-principal">
+        <div class="logo-container">
+            <h1>NEXORA <span>TECH</span></h1>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="quienes-somos.html" class="nav-link">La Empresa</a></li>
+                    <li><a href="productos.html" class="nav-link">Servicios</a></li>
+                    <li><a href="sucursales.html" class="nav-link">Sucursales</a></li>
+                    <li><a href="tienda.html" class="nav-link activo">Tienda Online</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contactar</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="btn-theme" aria-label="Cambiar tema">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- LÍNEA DE TIEMPO DE LOS 7 PASOS -->
+        <div class="checkout-steps">
+            <div class="step-item active" id="step-indicator-1"><span class="step-number">1</span> Catálogo</div>
+            <div class="step-item" id="step-indicator-2"><span class="step-number">2</span> Producto</div>
+            <div class="step-item" id="step-indicator-3"><span class="step-number">3</span> Agregado</div>
+            <div class="step-item" id="step-indicator-4"><span class="step-number">4</span> Carrito</div>
+            <div class="step-item" id="step-indicator-5"><span class="step-number">5</span> Envío</div>
+            <div class="step-item" id="step-indicator-6"><span class="step-number">6</span> Pago</div>
+            <div class="step-item" id="step-indicator-7"><span class="step-number">7</span> Confirmación</div>
+        </div>
+
+        <!-- PASO 1: CATÁLOGO DE PRODUCTOS -->
+        <section id="step-1" class="checkout-step-content active">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">Catálogo de Hardware y Componentes</h2>
+            <div style="overflow-x: auto;">
+                <table class="tabla-tienda">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Imagen</th>
+                            <th>Marca</th>
+                            <th>Capacidad / Esp.</th>
+                            <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>HD-101</strong></td>
+                            <td><img src="foto/DISCO1.webp" alt="Disco Kingston" class="img-producto-tabla"></td>
+                            <td>Kingston</td>
+                            <td>1 TB</td>
+                            <td><span class="badge-tipo">SSD NVMe</span></td>
+                            <td><strong>S/ 289.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('HD-101', 'Kingston NV2 1TB NVMe M.2', 'Kingston', '1 TB', 'SSD NVMe', 289.00, 'foto/DISCO1.webp')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>HD-102</strong></td>
+                            <td><img src="foto/DISCO2.webp" alt="Disco Western Digital" class="img-producto-tabla"></td>
+                            <td>Western Digital</td>
+                            <td>2 TB</td>
+                            <td><span class="badge-tipo">HDD Externo</span></td>
+                            <td><strong>S/ 310.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('HD-102', 'WD Elements 2TB USB 3.0', 'Western Digital', '2 TB', 'HDD Externo', 310.00, 'foto/DISCO2.webp')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>HD-103</strong></td>
+                            <td><img src="foto/DISCO3.webp" alt="Disco Samsung" class="img-producto-tabla"></td>
+                            <td>Samsung</td>
+                            <td>500 GB</td>
+                            <td><span class="badge-tipo">SSD SATA</span></td>
+                            <td><strong>S/ 210.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('HD-103', 'Samsung 870 EVO 500GB 2.5', 'Samsung', '500 GB', 'SSD SATA', 210.00, 'foto/DISCO3.webp')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>HD-104</strong></td>
+                            <td><img src="foto/DISCO4.TB.webp" alt="Disco Crucial" class="img-producto-tabla"></td>
+                            <td>Crucial</td>
+                            <td>2 TB</td>
+                            <td><span class="badge-tipo">SSD NVMe</span></td>
+                            <td><strong>S/ 520.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('HD-104', 'Crucial P3 Plus 2TB PCIe 4.0', 'Crucial', '2 TB', 'SSD NVMe', 520.00, 'foto/DISCO4.TB.webp')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAM-101</strong></td>
+                            <td><img src="foto/MEMORIA.jpg" alt="Memoria RAM Kingston" class="img-producto-tabla"></td>
+                            <td>Kingston</td>
+                            <td>4 GB</td>
+                            <td><span class="badge-tipo">DDR3 1600MHz</span></td>
+                            <td><strong>S/ 65.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('RAM-101', 'Memoria RAM DDR3 4Gb 1600Mhz marca Kingston KVR para PC', 'Kingston', '4 GB', 'DDR3 1600MHz', 65.00, 'foto/MEMORIA.jpg')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>NET-101</strong></td>
+                            <td><img src="foto/router.jpg" alt="Router Asus" class="img-producto-tabla"></td>
+                            <td>Asus</td>
+                            <td>1200 Mbps</td>
+                            <td><span class="badge-tipo">Wi-Fi 5 Dual Band</span></td>
+                            <td><strong>S/ 189.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('NET-101', 'Router Asus Doble Banda AC1200 Wi-Fi 5', 'Asus', '1200 Mbps', 'Wi-Fi 5 Dual Band', 189.00, 'foto/router.jpg')">Ver Producto</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>PER-101</strong></td>
+                            <td><img src="foto/mouse.jpg" alt="Mouse Kuzler" class="img-producto-tabla"></td>
+                            <td>Kuzler</td>
+                            <td>N/A</td>
+                            <td><span class="badge-tipo">Inalámbrico / BT</span></td>
+                            <td><strong>S/ 45.00</strong></td>
+                            <td><button class="btn-accion" onclick="verProducto('PER-101', 'Mouse Inalámbrico Bluetooth Negro Kuzler', 'Kuzler', 'N/A', 'Inalámbrico / BT', 45.00, 'foto/mouse.jpg')">Ver Producto</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PASO 2: DETALLE DEL PRODUCTO -->
+        <section id="step-2" class="checkout-step-content">
+            <div class="card" style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+                <img id="det-img" src="" alt="Producto" style="width: 180px; height: 180px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div style="flex: 1;">
+                    <span id="det-codigo" style="color: var(--accent-color); font-weight: bold; font-size: 14px;"></span>
+                    <h2 id="det-nombre" style="margin: 5px 0 15px 0; color: var(--primary-color);"></h2>
+                    <p><strong>Marca:</strong> <span id="det-marca"></span></p>
+                    <p><strong>Capacidad / Especificación:</strong> <span id="det-capacidad"></span></p>
+                    <p><strong>Tipo:</strong> <span id="det-tipo"></span></p>
+                    <h3 id="det-precio" style="color: var(--accent-color); margin: 15px 0; font-size: 26px;"></h3>
+                    <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <button class="btn-accion" onclick="agregarAlCarrito()">🛒 Agregar al Carrito</button>
+                        <button class="btn-accion btn-secundario" onclick="irAlPaso(1)">Volver al Catálogo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 3: CONFIRMACIÓN DE AGREGADO -->
+        <section id="step-3" class="checkout-step-content">
+            <div class="card" style="text-align: center; padding: 50px 20px;">
+                <span style="font-size: 60px;">✅</span>
+                <h2 style="margin: 15px 0; color: var(--primary-color);">¡Producto añadido con éxito!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">El elemento fue guardado en tu carrito de compras.</p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="btn-accion" onclick="irAlPaso(4)">Ver Mi Carrito</button>
+                    <button class="btn-accion btn-secundario" onclick="irAlPaso(1)">Seguir Comprando</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 4: CARRITO DE COMPRAS -->
+        <section id="step-4" class="checkout-step-content">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">Tu Carrito de Compras</h2>
+            <div class="card">
+                <div id="carrito-vacio-msg" style="display:none; text-align:center; padding: 20px; color: var(--text-muted);">El carrito está vacío. Agrega productos desde el catálogo.</div>
+                <div style="overflow-x: auto;">
+                    <table class="tabla-tienda" id="tabla-carrito">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="carrito-items">
+                            <!-- Se llena por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: right; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                    <h3>Total Estimado: <span id="carrito-total" style="color: var(--accent-color);">S/ 0.00</span></h3>
+                    <br>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="btn-accion btn-secundario" onclick="irAlPaso(1)">Añadir más productos</button>
+                        <button class="btn-accion" id="btn-continuar-envio" onclick="irAlPaso(5)">Continuar a Datos de Envío ➡️</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 5: DATOS DE ENVÍO -->
+        <section id="step-5" class="checkout-step-content">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">Información de Envío</h2>
+            <div class="card">
+                <form id="form-envio" onsubmit="guardarEnvio(event)">
+                    <div class="form-group"><label>Nombre Completo</label><input type="text" id="env-nombre" required placeholder="Ej. José López"></div>
+                    <div class="form-group"><label>Dirección de Entrega</label><input type="text" id="env-direccion" required placeholder="Av. Principal 123, Dpto. 401"></div>
+                    <div class="form-group"><label>Teléfono de Contacto</label><input type="tel" id="env-telefono" required placeholder="987654321"></div>
+                    <div style="display: flex; gap: 10px; margin-top: 25px;">
+                        <button type="submit" class="btn-accion">Continuar al Método de Pago ➡️</button>
+                        <button type="button" class="btn-accion btn-secundario" onclick="irAlPaso(4)">Volver al Carrito</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- PASO 6: MÉTODO DE PAGO -->
+        <section id="step-6" class="checkout-step-content">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">Método de Pago</h2>
+            <div class="card">
+                <div class="metodo-pago-card selected" onclick="seleccionarPago(this)">
+                    <input type="radio" name="pago" checked> 💳 <strong>Tarjeta de Crédito / Débito</strong> (Visa, Mastercard)
+                </div>
+                <div class="metodo-pago-card" onclick="seleccionarPago(this)">
+                    <input type="radio" name="pago"> 📲 <strong>Transferencia Directa / Billetera Digital</strong> (Yape / Plin / BCP)
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button class="btn-accion" onclick="procesarOrden()">Confirmar y Finalizar Pedido 🚀</button>
+                    <button class="btn-accion btn-secundario" onclick="irAlPaso(5)">Volver a Datos de Envío</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASO 7: CONFIRMACIÓN -->
+        <section id="step-7" class="checkout-step-content">
+            <div class="card" style="text-align: center; padding: 50px 20px;">
+                <span style="font-size: 70px;">🎉</span>
+                <h2 style="margin: 15px 0; color: var(--accent-cyan);">¡Compra Realizada con Éxito!</h2>
+                <p style="font-size: 18px;">Número de orden: <strong style="color: var(--accent-color);">#NX-<span id="orden-id"></span></strong></p>
+                <p style="color: var(--text-muted); margin-top: 10px;">Hemos recibido tu solicitud. Te enviaremos un correo de confirmación con la boleta electrónica y el código de seguimiento.</p>
+                <br>
+                <button class="btn-accion" onclick="reiniciarTienda()">Volver a la Tienda</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="dinamica.js"></script>
+    <script>
+        // LÓGICA DE CONTROL DE LA TIENDA Y LOS 7 PASOS
+        let productoSeleccionado = null;
+        let carrito = [];
+
+        function irAlPaso(paso) {
+            document.querySelectorAll('.checkout-step-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.step-item').forEach((el, index) => {
+                el.classList.remove('active', 'completed');
+                if (index + 1 < paso) el.classList.add('completed');
+                if (index + 1 === paso) el.classList.add('active');
+            });
+            const pasoActual = document.getElementById(`step-${paso}`);
+            if (pasoActual) pasoActual.classList.add('active');
+        }
+
+        function verProducto(codigo, nombre, marca, capacidad, tipo, precio, rutaImagen) {
+            productoSeleccionado = { codigo, nombre, marca, capacidad, tipo, precio, rutaImagen };
+            document.getElementById('det-codigo').textContent = codigo;
+            document.getElementById('det-nombre').textContent = nombre;
+            document.getElementById('det-marca').textContent = marca;
+            document.getElementById('det-capacidad').textContent = capacidad;
+            document.getElementById('det-tipo').textContent = tipo;
+            document.getElementById('det-precio').textContent = `S/ ${precio.toFixed(2)}`;
+            document.getElementById('det-img').src = rutaImagen;
+            irAlPaso(2);
+        }
+
+        function agregarAlCarrito() {
+            if (productoSeleccionado) {
+                carrito.push(productoSeleccionado);
+                actualizarCarrito();
+                irAlPaso(3);
+            }
+        }
+
+        function actualizarCarrito() {
+            const tbody = document.getElementById('carrito-items');
+            const msgVacio = document.getElementById('carrito-vacio-msg');
+            const tabla = document.getElementById('tabla-carrito');
+            const btnContinuar = document.getElementById('btn-continuar-envio');
+
+            tbody.innerHTML = '';
+            let total = 0;
+
+            if (carrito.length === 0) {
+                msgVacio.style.display = 'block';
+                tabla.style.display = 'none';
+                btnContinuar.style.display = 'none';
+            } else {
+                msgVacio.style.display = 'none';
+                tabla.style.display = 'table';
+                btnContinuar.style.display = 'inline-block';
+
+                carrito.forEach((item) => {
+                    total += item.precio;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>${item.nombre}</strong><br><small style="color: var(--text-muted);">${item.codigo}</small></td>
+                            <td>S/ ${item.precio.toFixed(2)}</td>
+                            <td>1</td>
+                            <td><strong>S/ ${item.precio.toFixed(2)}</strong></td>
+                        </tr>
+                    `;
+                });
+            }
+
+            document.getElementById('carrito-total').textContent = `S/ ${total.toFixed(2)}`;
+        }
+
+        function guardarEnvio(e) {
+            e.preventDefault();
+            irAlPaso(6);
+        }
+
+        function seleccionarPago(element) {
+            document.querySelectorAll('.metodo-pago-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        function procesarOrden() {
+            document.getElementById('orden-id').textContent = Math.floor(100000 + Math.random() * 900000);
+            irAlPaso(7);
+        }
+
+        function reiniciarTienda() {
+            carrito = [];
+            productoSeleccionado = null;
+            actualizarCarrito();
+            irAlPaso(1);
+        }
+    </script>
+</body>
+</html>

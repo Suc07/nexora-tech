@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Servicios de NEXORA TECH: ciberseguridad, desarrollo web, software a medida e inteligencia artificial para empresas.">
+    <title>NEXORA TECH - Servicios</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+
+    <header class="header-principal">
+        <div class="logo-container">
+            <h1>NEXORA <span>TECH</span></h1>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="quienes-somos.html" class="nav-link">La Empresa</a></li>
+                    <li><a href="productos.html" class="nav-link activo" aria-current="page">Servicios</a></li>
+                    <li><a href="sucursales.html" class="nav-link">Sucursales</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contactar</a></li>
+                    <li><a href="tienda.html" class="nav-link">Tienda Online</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="btn-theme" aria-label="Cambiar tema">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-banner hero-corto" style="background-image: url('foto/nuestrosproductos.jpg');">
+            <div class="hero-content">
+                <h2>Nuestros servicios</h2>
+                <p>En NEXORA TECH ofrecemos soluciones tecnológicas orientadas a mejorar la seguridad, productividad y transformación digital de las empresas.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <h3 class="titulo-seccion">🛡️ Ciberseguridad</h3>
+            <div class="grid-3">
+                <div class="card"><h4>Protección empresarial</h4><p>Implementamos firewalls, cifrado y control de accesos para proteger sistemas, redes y datos frente a amenazas digitales.</p></div>
+                <div class="card"><h4>Auditoría de seguridad</h4><p>Analizamos sistemas y aplicaciones mediante pruebas de penetración para identificar vulnerabilidades antes que un atacante lo haga.</p></div>
+                <div class="card"><h4>Monitoreo y prevención</h4><p>Monitoreo 24/7 con alertas en tiempo real para detectar comportamientos sospechosos y responder oportunamente.</p></div>
+            </div>
+
+            <h3 class="titulo-seccion">🌐 Desarrollo web</h3>
+            <div class="grid-3">
+                <div class="card"><h4>Páginas corporativas</h4><p>Diseñamos sitios modernos y rápidos con HTML5, CSS3 y JavaScript, optimizados para posicionamiento en buscadores.</p></div>
+                <div class="card"><h4>Plataformas web</h4><p>Desarrollamos plataformas con React y Node.js para gestionar información, procesos internos y atención a usuarios.</p></div>
+                <div class="card"><h4>Comercio electrónico</h4><p>Creamos tiendas online con pasarelas de pago integradas, gestión de inventario y panel administrativo.</p></div>
+            </div>
+
+            <h3 class="titulo-seccion">💻 Desarrollo de software</h3>
+            <div class="grid-3">
+                <div class="card"><h4>Sistemas empresariales</h4><p>Desarrollamos sistemas a medida en Python y Java para administrar información, procesos y operaciones.</p></div>
+                <div class="card"><h4>Aplicaciones móviles</h4><p>Creamos apps para Android e iOS adaptadas a los objetivos y necesidades específicas de cada cliente.</p></div>
+                <div class="card"><h4>Automatización de procesos</h4><p>Usamos scripts y bots para reducir tareas repetitivas y mejorar la eficiencia operativa hasta en un 40%.</p></div>
+            </div>
+
+            <h3 class="titulo-seccion">🤖 Inteligencia artificial</h3>
+            <div class="grid-3">
+                <div class="card"><h4>Automatización inteligente</h4><p>Integramos modelos de IA en procesos que se benefician de mayor rapidez y precisión en la toma de decisiones.</p></div>
+                <div class="card"><h4>Asistentes virtuales</h4><p>Desarrollamos chatbots y asistentes conversacionales para mejorar la atención al cliente las 24 horas.</p></div>
+                <div class="card"><h4>Análisis de información</h4><p>Implementamos dashboards y herramientas de análisis de datos que apoyan decisiones estratégicas.</p></div>
+            </div>
+
+            <div class="cta-final">
+                <h3>¿No sabes por dónde empezar?</h3>
+                <p>Agenda una llamada gratuita de 30 minutos y te ayudamos a definir el servicio ideal para tu empresa.</p>
+                <a href="contacto.html" class="btn-cta">Agendar llamada</a>
+            </div>
+        </section>
+
+        <footer class="footer-simple">
+            <h2>Tecnología diseñada para cada necesidad</h2>
+            <p>Cada proyecto es diferente. Por eso desarrollamos nuestras soluciones considerando los objetivos, necesidades y características de cada cliente.</p>
+            <p class="footer-copy">© 2026 NEXORA TECH. Todos los derechos reservados.</p>
+        </footer>
+    </main>
+
+    <script src="dinamica.js"></script>
+</body>
+</html>

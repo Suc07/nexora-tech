@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA TECH - Contactar</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            document.addEventListener("DOMContentLoaded", () => document.body.classList.add('dark-mode'));
+        }
+    </script>
+    <style>
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .btn-accion {
+            background: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-accion:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+        }
+
+        .info-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-principal">
+        <div class="logo-container">
+            <h1>NEXORA <span>TECH</span></h1>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="quienes-somos.html" class="nav-link">La Empresa</a></li>
+                    <li><a href="productos.html" class="nav-link">Servicios</a></li>
+                    <li><a href="sucursales.html" class="nav-link">Sucursales</a></li>
+                    <li><a href="tienda.html" class="nav-link">Tienda Online</a></li>
+                    <li><a href="contacto.html" class="nav-link activo">Contactar</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="btn-theme" aria-label="Cambiar tema">🌙</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 style="margin-bottom: 20px; color: var(--primary-color);">Canales de Atención y Contacto</h2>
+
+        <div class="contacto-grid">
+            <!-- TARJETA CON INFORMACIÓN GENERAL -->
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--accent-color);">Atención Directa</h3>
+                
+                <div class="info-item">
+                    <strong>📍 Oficina Central:</strong>
+                    <span>Av. Principal 123, Lima, Perú</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>📞 Teléfonos de Soporte:</strong>
+                    <span>(01) 456-7890 / +51 987 654 321</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>✉️ Correo Electrónico:</strong>
+                    <span>contacto@nexoratech.com</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>⏰ Horario de Atención:</strong>
+                    <span>Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábados: 9:00 AM - 1:00 PM</span>
+                </div>
+            </div>
+
+            <!-- TARJETA DE FORMULARIO OFICIAL (GOOGLE FORMS) -->
+            <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px;">
+                <span style="font-size: 50px; margin-bottom: 10px;">📋</span>
+                <h3 style="margin-bottom: 10px; color: var(--primary-color);">Formulario Oficial de Consultas</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">
+                    ¿Tienes dudas sobre nuestros productos, soporte técnico o cotizaciones corporativas? Completa nuestro formulario oficial y nuestro equipo te responderá a la brevedad.
+                </p>
+                
+                <!-- ENLACE DIRECTO AL GOOGLE FORM EN NUEVA PESTAÑA -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpy0W_U6PwJo6S2uXzq6wMttLkAWIT9utRPPUPtJGe5-Oa_g/viewform" 
+                   target="_blank" 
+                   class="btn-accion">
+                    Abrir Formulario de Contacto ↗
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="dinamica.js"></script>
+</body>
+</html>

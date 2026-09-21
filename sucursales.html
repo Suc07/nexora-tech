@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sucursales de NEXORA TECH en Lima, Bogotá, Santiago y Madrid, con horarios y datos de contacto de cada sede.">
+    <title>NEXORA TECH - Sucursales</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+
+    <header class="header-principal">
+        <div class="logo-container">
+            <h1>NEXORA <span>TECH</span></h1>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="quienes-somos.html" class="nav-link">La Empresa</a></li>
+                    <li><a href="productos.html" class="nav-link">Servicios</a></li>
+                    <li><a href="sucursales.html" class="nav-link activo" aria-current="page">Sucursales</a></li>
+                    <li><a href="contacto.html" class="nav-link">Contactar</a></li>
+                    <li><a href="tienda.html" class="nav-link">Tienda Online</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="btn-theme" aria-label="Cambiar tema">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-banner hero-corto" style="background-image: url('foto/sucursales.jpg');">
+            <div class="hero-content">
+                <h2>Nuestras sucursales</h2>
+                <p>Nuestra presencia en diferentes ciudades nos permite estar más cerca de nuestros clientes y brindar atención y soporte especializado.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <p class="texto-intro">
+                Nuestra presencia internacional nos permite ofrecer soluciones y soporte a organizaciones de diferentes regiones, manteniendo el mismo compromiso con la innovación, la seguridad y la calidad.
+            </p>
+
+            <div class="grid-3">
+                <div class="card card-sucursal">
+                    <h3>🇵🇪 Lima — Perú</h3>
+                    <p class="sede-nombre">NEXORA TECH Perú</p>
+                    <p>Av. Tecnológica 1250, San Isidro, Lima</p>
+                    <p>+51 1 500 2020</p>
+                    <p class="sede-subtitulo">Horario de atención:</p>
+                    <p>Lunes a viernes: 8:00 a. m. – 6:00 p. m.<br>Sábados: 9:00 a. m. – 1:00 p. m.</p>
+                </div>
+
+                <div class="card card-sucursal">
+                    <h3>🇨🇴 Bogotá — Colombia</h3>
+                    <p class="sede-nombre">NEXORA TECH Colombia</p>
+                    <p>Carrera 15 # 93-40, Bogotá</p>
+                    <p>+57 1 508 3040</p>
+                    <p class="sede-subtitulo">Horario de atención:</p>
+                    <p>Lunes a viernes: 8:00 a. m. – 6:00 p. m.</p>
+                </div>
+
+                <div class="card card-sucursal">
+                    <h3>🇨🇱 Santiago — Chile</h3>
+                    <p class="sede-nombre">NEXORA TECH Chile</p>
+                    <p>Av. Providencia 1450, Santiago</p>
+                    <p>+56 2 2895 4410</p>
+                    <p class="sede-subtitulo">Horario de atención:</p>
+                    <p>Lunes a viernes: 8:00 a. m. – 6:00 p. m.</p>
+                </div>
+
+                <div class="card card-sucursal">
+                    <h3>🇪🇸 Madrid — España</h3>
+                    <p class="sede-nombre">NEXORA TECH España</p>
+                    <p>Calle de Serrano 110, Madrid</p>
+                    <p>+34 910 220 550</p>
+                    <p class="sede-subtitulo">Horario de atención:</p>
+                    <p>Lunes a viernes: 9:00 a. m. – 6:00 p. m.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-simple">
+            <h2>Estamos cerca de ti</h2>
+            <p>Ofreciendo soluciones avanzadas y soporte continuo en cada una de nuestras sedes.</p>
+            <p class="footer-copy">© 2026 NEXORA TECH. Todos los derechos reservados.</p>
+        </footer>
+    </main>
+
+    <script src="dinamica.js"></script>
+</body>
+</html>
